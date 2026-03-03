@@ -45,3 +45,8 @@ fi
 if command -v fd >/dev/null 2>&1; then
     alias find='fd'
 fi
+
+alias update='sudo apt update && sudo apt upgrade'
+alias nalias='vim ~/.bash_aliases'
+alias bashrc='vim ~/.bashrc'
+alias reload='source ~/.bashrc'
