@@ -1,5 +1,3 @@
-
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -21,18 +19,6 @@ set_prompt() {
 PROMPT_COMMAND=set_prompt
 
 PROMPT_COMMAND=set_prompt
-
-if  which exa > /dev/null 2>&1; then
-	# exa is a modern ls replacement with Git integration: https://the.exa.website
-	alias ls="exa --git-ignore"
-	alias ll="exa --git-ignore --git -l --group"
-	alias la="exa --git -la"
-else
-	alias ls="ls --color=always"
-	alias ll="ls -l"
-	alias la="ls -lA"
-fi
-for alias in lsl sls lsls sl l s; do alias $alias=ls; done
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -67,17 +53,6 @@ shopt -s globstar
 # Add ~/.local/bin to $PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-
-# If ag is not installed, alias it to "grep -rn" (and generally force color for grep)
-alias grep="grep --color=always"
-which ag 2>/dev/null  || alias ag="grep -rn"
-
-# Open file with open
-alias open="xdg-open"
-
-# A really simple password generator
-alias pw='bash -c '"'"'echo `tr -dc $([ $# -gt 1 ] && echo $2 || echo "A-Za-z0-9") < /dev/urandom | head -c $([ $# -gt 0 ] && echo $1 || echo 30)`'"'"' --'
-
 ###########################
 ## Ubuntu-specific stuff ##
 ###########################
@@ -96,8 +71,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-
 # Display a list of the matching files
 
 bind "set show-all-if-ambiguous on"
@@ -113,9 +86,6 @@ bind "set menu-complete-display-prefix on"
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
-# tmux alias to work with colors
-alias tmux='tmux -2'
-
 export PATH="$HOME/.nvim/usr/bin/:$PATH"
 
 # use vim as pager
@@ -129,15 +99,8 @@ fi
 [ "$(command -v zoxide)" ] && eval "$(zoxide init --cmd cd bash)"
 # use fzf as ctrl-r
 [ "$(command -v fzf)" ] && eval "$(fzf --bash)"
-# cat with syntax highlight
-[ "$(command -v bat)" ] && alias cat="bat --style=plain"
 # Source local configs
 [ -f ~/.localrc ] && . ~/.localrc
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 # use difftastic as git diff if available
 [ "$(command -v difft)" ] && export GIT_EXTERNAL_DIFF=difft
-
-if [[ -f ~/.nvim/AppRun ]] then
-    alias vim=~/.nvim/AppRun
-fi
-
