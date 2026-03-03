@@ -1,6 +1,6 @@
 [user]
-	email = vitoralvespavani@gmail.com
-	name = Vitor Pavani
+	email = danpaes.public@gmail.com
+	name = Danilo Paes
 [core]
 	excludesFile = ~/.gitignore
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
