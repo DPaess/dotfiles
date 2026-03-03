@@ -1,64 +1,120 @@
-# If not running interactively, don't do anything
+#################################
+# Only run in interactive shells
+#################################
+
 case $- in
     *i*) ;;
       *) return;;
 esac
 
-# My custom prompt
+###################
+## PATH Handling ##
+###################
+
+# Function to safely prepend to PATH (avoid duplicates)
+path_prepend() {
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$1:$PATH" ;;
+    esac
+}
+
+path_prepend "$HOME/.local/bin"
+path_prepend "$HOME/.nvim/usr/bin"
+
+export PATH
+
+############################
+## History Configuration  ##
+############################
+
+HISTCONTROL=ignoreboth
+HISTSIZE=100000
+HISTFILESIZE=200000
+
+# Improve shell behavior: append history instead of overwriting, auto-adjust terminal size variables (LINES/COLUMNS), and enable recursive globbing with "**".
+shopt -s histappend
+shopt -s checkwinsize
+shopt -s globstar
+
+# Better history navigation with arrows
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
+# Improve TAB behavior
+bind "set show-all-if-ambiguous on"
+bind 'TAB':menu-complete
+bind "set menu-complete-display-prefix on"
+
+# Sync history across terminals (great with tmux)
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+######################
+## Prompt Custom    ##
+######################
+
 set_prompt() {
-    # Prefixo do virtualenv (só aparece se VIRTUAL_ENV existir)
-    venv='${VIRTUAL_ENV:+($(basename "$VIRTUAL_ENV")) }'
+    local reset="\[\033[0m\]"
+    local cyan="\[\033[38;5;14m\]"
+    local green="\[\033[38;5;2m\]"
+    local blue="\[\033[38;5;4m\]"
+    local magenta="\[\033[38;5;13m\]"
+
+    local venv='${VIRTUAL_ENV:+($(basename "$VIRTUAL_ENV")) }'
 
     if [ -n "$CONTAINER_ID" ]; then
-        PS1="\[\033[38;5;14m\][${venv}\[\033[38;5;2m\]\u@\h\[$(tput sgr0)\]\[\033[38;5;85m\].\[$(tput sgr0)\]\[\033[38;5;13m\]$CONTAINER_ID\[$(tput sgr0)\]\[\033[38;5;85m\] \[$(tput sgr0)\]\[\033[38;5;4m\]\W\[$(tput sgr0)\]\[\033[38;5;14m\]]\[$(tput sgr0)\]\\$ \[$(tput sgr0)\]"
+        PS1="${cyan}[${venv}${green}\u@\h${magenta}.${CONTAINER_ID} ${blue}\W${cyan}]${reset}\\$ "
     else
-        PS1="\[\033[38;5;14m\][${venv}\[\033[38;5;2m\]\u@\h\[$(tput sgr0)\]\[\033[38;5;85m\] \[$(tput sgr0)\]\[\033[38;5;4m\]\W\[$(tput sgr0)\]\[\033[38;5;14m\]]\[$(tput sgr0)\]\\$ \[$(tput sgr0)\]"
+        PS1="${cyan}[${venv}${green}\u@\h ${blue}\W${cyan}]${reset}\\$ "
     fi
 }
 
-PROMPT_COMMAND=set_prompt
+PROMPT_COMMAND="set_prompt; $PROMPT_COMMAND"
 
-PROMPT_COMMAND=set_prompt
+#####################
+## Color Settings  ##
+#####################
 
-# colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export COLORTERM=truecolor
 
-# search through history with up/down arrows
-bind '"\e[A": history-search-backward' 2>/dev/null
-bind '"\e[B": history-search-forward' 2>/dev/null
+#########################
+## Editor Configuration ##
+#########################
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
+if command -v nvim >/dev/null 2>&1; then
+    export EDITOR="nvim"
+    export VISUAL="nvim"
+    export MANPAGER="nvim --clean +Man!"
+    export MANWIDTH=999
+fi
 
-# After each command, save and reload history
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+#########################
+## Modern Integrations ##
+#########################
 
-# append to the history file, don't overwrite it
-shopt -s histappend
+# zoxide (smart cd)
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init --cmd cd bash)"
+fi
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTFILESIZE=200000
-HISTSIZE=100000
+# fzf (Ctrl+R, file search)
+if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --bash)"
+fi
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+# difftastic as git diff tool (optional)
+if command -v difft >/dev/null 2>&1; then
+    export GIT_EXTERNAL_DIFF=difft
+fi
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-shopt -s globstar
+##########################
+## Source Extra Configs ##
+##########################
 
-
-# Add ~/.local/bin to $PATH
-export PATH="$HOME/.local/bin:$PATH"
-
-###########################
-## Ubuntu-specific stuff ##
-###########################
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+[ -f ~/.localrc ] && . ~/.localrc
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -71,36 +127,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Display a list of the matching files
-
-bind "set show-all-if-ambiguous on"
-
-# Perform partial completion on the first Tab press,
-# only start cycling full results on the second Tab press
-
-bind 'TAB':menu-complete
-bind "set menu-complete-display-prefix on"
-
-# Cycle through history based on characters already typed on the line
-
-bind '"\e[A":history-search-backward'
-bind '"\e[B":history-search-forward'
-
-export PATH="$HOME/.nvim/usr/bin/:$PATH"
-
-# use vim as pager
-if [[ "$(command -v nvim)" ]]; then
-  export EDITOR='nvim'
-  export MANPAGER='nvim --clean +Man!'
-  export MANWIDTH=999
-fi
-
-# use zoxide as cd if available
-[ "$(command -v zoxide)" ] && eval "$(zoxide init --cmd cd bash)"
-# use fzf as ctrl-r
-[ "$(command -v fzf)" ] && eval "$(fzf --bash)"
-# Source local configs
-[ -f ~/.localrc ] && . ~/.localrc
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-# use difftastic as git diff if available
-[ "$(command -v difft)" ] && export GIT_EXTERNAL_DIFF=difft
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
