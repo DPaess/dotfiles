@@ -35,3 +35,13 @@ alias tmux='tmux -2'
 if [[ -f "$HOME/.nvim/AppRun" ]]; then
     alias vim="$HOME/.nvim/AppRun"
 fi
+
+# ripgrep como substituto moderno do grep (mantém cores automáticas)
+if command -v rg >/dev/null 2>&1; then
+    alias grep='rg --color=auto'
+fi
+
+# fd como substituto moderno do find
+if command -v fd >/dev/null 2>&1; then
+    alias find='fd'
+fi
