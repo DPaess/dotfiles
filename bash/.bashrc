@@ -100,7 +100,8 @@ fi
 
 # fzf (Ctrl+R, file search)
 if command -v fzf >/dev/null 2>&1; then
-    eval "$(fzf --bash)"
+    [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash
+    [ -f /usr/share/doc/fzf/examples/completion.bash ] && source /usr/share/doc/fzf/examples/completion.bash
 fi
 
 # difftastic as git diff tool (optional)
