@@ -1,17 +1,13 @@
 local M = {
-    "ellisonleao/gruvbox.nvim",
-    config = function()
-        require("gruvbox").setup {
-            contrast = "hard",
-            italic = {
-                strings = false,
-                emphasis = false,
-                comments = false,
-                operators = false,
-                folds = false,
-            },
-        }
-        vim.cmd("colorscheme gruvbox")
-    end,
+  "Mofiqul/dracula.nvim",
+  config = function()
+    require("dracula").setup({
+      transparent_bg = false,
+      italic_comment = false,
+    })
+
+    vim.cmd("colorscheme dracula")
+  end,
 }
+
 return { M }
