@@ -5,7 +5,7 @@ local M = {
     config = function()
         require('lualine').setup {
             options = {
-                theme                = 'powerline',
+                theme                = 'dracula',
                 component_separators = '',
                 section_separators   = { left = '', right = '' },
             },
