@@ -32,8 +32,8 @@ alias tmux='tmux -2'
 [ "$(command -v bat)" ] && alias cat="bat --style=plain"
 
 # Use neovim as vim
-if [[ -f "$HOME/.nvim/AppRun" ]]; then
-    alias vim="$HOME/.nvim/AppRun"
+if [[ -f "$HOME/.local/bin/nvim" ]]; then
+    alias vim="$HOME/.local/bin/nvim"
 fi
 
 # ripgrep como substituto moderno do grep (mantém cores automáticas)
@@ -46,7 +46,7 @@ if command -v fd >/dev/null 2>&1; then
     alias find='fd'
 fi
 
-alias update='sudo apt update && sudo apt upgrade'
-alias nalias='vim ~/.bash_aliases'
+alias upgrade='sudo apt update && sudo apt upgrade'
+alias aliases='vim ~/.bash_aliases'
 alias bashrc='vim ~/.bashrc'
 alias reload='source ~/.bashrc'
