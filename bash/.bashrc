@@ -20,7 +20,6 @@ path_prepend() {
 }
 
 path_prepend "$HOME/.local/bin"
-path_prepend "$HOME/.nvim/usr/bin"
 
 export PATH
 
