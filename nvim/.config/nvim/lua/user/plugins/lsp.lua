@@ -49,6 +49,10 @@ local M = {
             -- C/C++
             vim.lsp.config("clangd", {
                 capabilities = capabilities,
+                cmd = {
+                    "clangd",
+                    "--background-index",
+                },
             })
 
             -- Python
@@ -61,6 +65,11 @@ local M = {
                 "lua_ls",
                 "clangd",
                 "pyright",
+            })
+
+            --AUTOMATIC LSP
+            vim.diagnostic.config({
+                virtual_text = true,
             })
         end,
     },
