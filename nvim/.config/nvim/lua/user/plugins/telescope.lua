@@ -12,7 +12,9 @@ return {
         local opts = { noremap = true, silent = true }
         keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
         keymap("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", opts)
-        keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts)
+        keymap("n", "<leader>fe", "<cmd>Telescope diagnostics<CR>", opts)
         keymap("n", "<leader>fr", "<cmd>Telescope lsp_references<CR>", opts)
+        keymap("n", "<leader>fi", "<cmd>Telescope lsp_implementations<CR>", opts)
+        keymap("n", "<leader>fd", "<cmd>Telescope lsp_definitions<CR>", opts)
     end
 }
