@@ -8,13 +8,14 @@ return {
             }
         }
 
-        local keymap = vim.api.nvim_set_keymap
-        local opts = { noremap = true, silent = true }
-        keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
-        keymap("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", opts)
-        keymap("n", "<leader>fe", "<cmd>Telescope diagnostics<CR>", opts)
-        keymap("n", "<leader>fr", "<cmd>Telescope lsp_references<CR>", opts)
-        keymap("n", "<leader>fi", "<cmd>Telescope lsp_implementations<CR>", opts)
-        keymap("n", "<leader>fd", "<cmd>Telescope lsp_definitions<CR>", opts)
+        local keymap = vim.keymap.set
+        local opts = { silent = true }
+        local builtin = require("telescope.builtin")
+        keymap("n", "<leader>ff", builtin.find_files, opts)
+        keymap("n", "<leader>fg", builtin.live_grep, opts)
+        keymap("n", "<leader>fe", builtin.diagnostics, opts)
+        keymap("n", "<leader>fr", builtin.lsp_references, opts)
+        keymap("n", "<leader>fi", builtin.lsp_implementations, opts)
+        keymap("n", "<leader>fd", builtin.lsp_definitions, opts)
     end
 }
