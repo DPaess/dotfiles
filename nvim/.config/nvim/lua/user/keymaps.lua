@@ -1,5 +1,5 @@
-local opts = { noremap = true, silent = true }
-local keymap = vim.api.nvim_set_keymap
+local opts = { silent = true }
+local keymap = vim.keymap.set
 
 -- disable arrow keys
 keymap("n", "<Up>", "<Nop>", opts)
@@ -33,12 +33,20 @@ keymap("i", '"', '"<c-g>u', opts)
 keymap("i", "'", "'<c-g>u", opts)
 
 -- lsp
-keymap("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-keymap("n", "<leader>gi", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
-keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+keymap("n", "<leader>gd", vim.lsp.buf.definition, opts)
+keymap("n", "<leader>gi", vim.lsp.buf.declaration, opts)
+keymap("n", "<leader>gI", vim.lsp.buf.implementation, opts)
+keymap("n", "<leader>gr", vim.lsp.buf.references, opts)
+keymap("n", "<leader>lf", vim.lsp.buf.format, opts)
+keymap("n", "<leader>lr", vim.lsp.buf.rename, opts)
+keymap("n", "<leader>la", vim.lsp.buf.code_action, opts)
+-- keymap("n", "K", vim.lsp.buf.hover, opts)
+-- keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
+
+-- copy
 keymap("n", "<leader>y", '"+y', opts)
 keymap("v", "<leader>y", '"+y', opts)
-keymap("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+-- paste
+keymap("n", "<leader>p", '"+p', opts)
+keymap("v", "<leader>p", '"+p', opts)
+keymap("x", "<leader>P", '"_dP', opts)
