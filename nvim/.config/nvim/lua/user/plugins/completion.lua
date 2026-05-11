@@ -10,7 +10,11 @@ local M = {
 
     -- Configuration for blink.cmp including keymaps, appearance, completion behavior, and sources
     opts = {
-        keymap = { preset = "default" },
+        keymap = {
+            preset = "default",
+            -- disable a keymap from the preset
+            ['<C-k>'] = false,
+        },
 
         signature = { enabled = true },
 
