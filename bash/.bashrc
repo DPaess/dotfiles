@@ -20,6 +20,7 @@ path_prepend() {
 }
 
 path_prepend "$HOME/.local/bin"
+path_prepend "/usr/local/go/bin"
 
 export PATH
 
@@ -107,6 +108,7 @@ fi
 if command -v difft >/dev/null 2>&1; then
     export GIT_EXTERNAL_DIFF=difft
 fi
+
 
 ##########################
 ## Source Extra Configs ##
