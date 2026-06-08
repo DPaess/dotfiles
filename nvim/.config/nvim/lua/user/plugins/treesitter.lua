@@ -8,7 +8,7 @@ local M = {
 
         configs.setup(
             {
-                ensure_installed = { "lua", "vim", "vimdoc", "query", "python", "c", "cpp", "markdown", "markdown_inline", "go", "rust", "toml" },
+                ensure_installed = { "lua", "vim", "vimdoc", "query", "python", "c", "cpp", "markdown", "markdown_inline", "go", "rust", "toml", "javascript", "typescript", "html", "css", "json" },
                 sync_install = false,
                 highlight = { enable = true },
                 indent = { enable = true },
