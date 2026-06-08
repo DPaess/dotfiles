@@ -21,6 +21,7 @@ local M = {
                     "lua_ls",
                     "clangd",
                     "pyright",
+                    "arduino_language_server",
                 },
             })
 
@@ -60,7 +61,6 @@ local M = {
                 capabilities = capabilities,
             })
 
-            -- ENABLE TODOS
             vim.lsp.enable({
                 "lua_ls",
                 "clangd",
