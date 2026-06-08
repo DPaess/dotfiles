@@ -23,6 +23,9 @@ local M = {
                     "pyright",
                     "gopls",
                     "arduino_language_server",
+                    "ts_ls",
+                    "html",
+                    "cssls",
                 },
             })
 
@@ -73,11 +76,29 @@ local M = {
                 },
             })
 
+            -- JS/TS
+            vim.lsp.config("ts_ls", {
+                capabilities = capabilities,
+            })
+
+            -- HTML
+            vim.lsp.config("html", {
+                capabilities = capabilities,
+            })
+
+            -- CSS
+            vim.lsp.config("cssls", {
+                capabilities = capabilities,
+            })
+
             vim.lsp.enable({
                 "lua_ls",
                 "clangd",
                 "pyright",
                 "gopls",
+                "ts_ls",
+                "html",
+                "cssls",
             })
 
             --AUTOMATIC LSP
