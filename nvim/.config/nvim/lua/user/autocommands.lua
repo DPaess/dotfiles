@@ -111,3 +111,4 @@ autocmd("BufWritePre", {
         vim.lsp.buf.format()
     end,
 })
+

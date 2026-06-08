@@ -1,7 +1,7 @@
 local M = {
     "nvim-treesitter/nvim-treesitter",
     branch = "master",
-    lazy = "false",
+    lazy = false,
     build = ":TSUpdate",
     config = function()
         local configs = require("nvim-treesitter.configs")
@@ -10,7 +10,6 @@ local M = {
             {
                 ensure_installed = { "lua", "vim", "vimdoc", "query", "python", "c", "cpp", "markdown", "markdown_inline" },
                 sync_install = false,
-                auto_install = true,
                 highlight = { enable = true },
                 indent = { enable = true },
                 incremental_selection = {
