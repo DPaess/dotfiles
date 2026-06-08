@@ -109,6 +109,21 @@ if command -v difft >/dev/null 2>&1; then
     export GIT_EXTERNAL_DIFF=difft
 fi
 
+# direnv (per-directory environment)
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
+
+####################
+## Shell Functions ##
+####################
+
+# ESP-IDF: activate toolchain in current shell (fallback for SSH or machines without direnv)
+# IDF installed via EIM at ~/.espressif/<version>/esp-idf — update path when upgrading
+get_idf() {
+    source "${IDF_PATH:-$HOME/.espressif/v6.0.1/esp-idf}/export.sh"
+}
+
 
 ##########################
 ## Source Extra Configs ##
