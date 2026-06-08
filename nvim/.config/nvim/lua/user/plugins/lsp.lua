@@ -21,6 +21,7 @@ local M = {
                     "lua_ls",
                     "clangd",
                     "pyright",
+                    "gopls",
                     "arduino_language_server",
                 },
             })
@@ -61,10 +62,22 @@ local M = {
                 capabilities = capabilities,
             })
 
+            -- Go
+            vim.lsp.config("gopls", {
+                capabilities = capabilities,
+                settings = {
+                    gopls = {
+                        gofumpt = true,
+                        staticcheck = true,
+                    },
+                },
+            })
+
             vim.lsp.enable({
                 "lua_ls",
                 "clangd",
                 "pyright",
+                "gopls",
             })
 
             --AUTOMATIC LSP
