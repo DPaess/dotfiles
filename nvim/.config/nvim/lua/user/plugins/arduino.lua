@@ -7,11 +7,11 @@ return {
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
         require("Arduino-Nvim").setup({
-            board          = "arduino:avr:nano",
-            picker_backend = "telescope",
+            board                = "arduino:avr:nano",
+            picker_backend       = "telescope",
             use_default_keymaps  = true,
             use_default_commands = true,
         })
-        require("Arduino-Nvim.lsp").setup()
+        require("Arduino-Nvim.lsp").setup_arduino_lsp()
     end,
 }
