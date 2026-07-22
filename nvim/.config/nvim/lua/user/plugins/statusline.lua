@@ -1,4 +1,4 @@
-local M = {
+return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
 
@@ -13,12 +13,10 @@ local M = {
                 lualine_c = {
                     {
                         'filename',
-                        path = 1, -- 1 = relativo ao cwd, 2 = absoluto, 3 = absoluto com ~ no home
+                        path = 1, -- 1 = relative to cwd, 2 = absolute, 3 = absolute with ~ for home
                     },
                 },
             },
         }
     end
 }
-
-return { M }
