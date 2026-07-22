@@ -1,4 +1,4 @@
-local M = {
+return {
     {
         "williamboman/mason.nvim",
         config = function()
@@ -26,6 +26,11 @@ local M = {
                     "ts_ls",
                     "html",
                     "cssls",
+                },
+                -- v2 auto-enables installed servers via vim.lsp.enable().
+                -- Exclude arduino_language_server: Arduino-Nvim sets it up itself.
+                automatic_enable = {
+                    exclude = { "arduino_language_server" },
                 },
             })
 
@@ -91,22 +96,11 @@ local M = {
                 capabilities = capabilities,
             })
 
-            vim.lsp.enable({
-                "lua_ls",
-                "clangd",
-                "pyright",
-                "gopls",
-                "ts_ls",
-                "html",
-                "cssls",
-            })
+            -- Servers are enabled by mason-lspconfig's automatic_enable (above).
 
-            --AUTOMATIC LSP
             vim.diagnostic.config({
                 virtual_text = true,
             })
         end,
     },
 }
-
-return M

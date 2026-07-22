@@ -33,15 +33,11 @@ keymap("i", '"', '"<c-g>u', opts)
 keymap("i", "'", "'<c-g>u", opts)
 
 -- lsp
+-- Neovim 0.11+ ships native LSP maps: grn (rename), gra (code action),
+-- grr (references), gri (implementation), K (hover), [d/]d + <C-w>d (diagnostics).
+-- Only the maps below have no native equivalent.
 keymap("n", "<leader>gd", vim.lsp.buf.definition, opts)
-keymap("n", "<leader>gi", vim.lsp.buf.declaration, opts)
-keymap("n", "<leader>gI", vim.lsp.buf.implementation, opts)
-keymap("n", "<leader>gr", vim.lsp.buf.references, opts)
 keymap("n", "<leader>lf", vim.lsp.buf.format, opts)
-keymap("n", "<leader>lr", vim.lsp.buf.rename, opts)
-keymap("n", "<leader>la", vim.lsp.buf.code_action, opts)
--- keymap("n", "K", vim.lsp.buf.hover, opts)
--- keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
 
 -- copy
 keymap("n", "<leader>y", '"+y', opts)
