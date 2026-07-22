@@ -1,4 +1,4 @@
-local M = {
+return {
     "saghen/blink.cmp",
     version = "1.*",
 
@@ -18,24 +18,11 @@ local M = {
 
         signature = { enabled = true },
 
-        appearance = {
-            nerd_font_variant = "mono",
-        },
-
         completion = {
             documentation = { auto_show = true },
-            menu = {
-                auto_show = true,
-            },
-        },
-
-        sources = {
-            default = { "lsp", "path", "snippets", "buffer" },
         },
 
         cmdline = {
-            enabled = true,
-
             completion = {
                 menu = { auto_show = true },
             },
@@ -43,7 +30,7 @@ local M = {
             sources = function()
                 local type = vim.fn.getcmdtype()
 
-                -- busca no buffer
+                -- search in buffer
                 if type == "/" or type == "?" then
                     return { "buffer" }
                 end
@@ -57,8 +44,4 @@ local M = {
             end,
         },
     },
-
-    opts_extend = { "sources.default" }
 }
-
-return { M }

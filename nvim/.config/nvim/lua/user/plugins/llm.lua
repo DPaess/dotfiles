@@ -24,7 +24,6 @@ return {
 
         display = {
             diff = {
-                enabled = true,
                 provider = "mini_diff",
                 word_highlights = {
                     additions = true,
@@ -32,7 +31,6 @@ return {
                 },
             },
             chat = {
-                show_token_count = true,
                 fold_context = true,
                 start_in_insert_mode = true,
             }
