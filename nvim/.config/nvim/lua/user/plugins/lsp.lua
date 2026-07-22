@@ -3,6 +3,14 @@ return {
         "williamboman/mason.nvim",
         config = function()
             require("mason").setup()
+
+            -- auto-install the tree-sitter CLI (nvim-treesitter main branch builds parsers from source)
+            local registry = require("mason-registry")
+            registry.refresh(function()
+                if not registry.is_installed("tree-sitter-cli") then
+                    registry.get_package("tree-sitter-cli"):install()
+                end
+            end)
         end,
     },
 
