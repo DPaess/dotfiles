@@ -42,6 +42,7 @@ keymap("n", "<leader>lf", vim.lsp.buf.format, opts)
 -- copy
 keymap("n", "<leader>y", '"+y', opts)
 keymap("v", "<leader>y", '"+y', opts)
+keymap("n", "<leader>Y", "<cmd>%y+<cr>", opts)
 -- paste
 keymap("n", "<leader>p", '"+p', opts)
 keymap("v", "<leader>p", '"+p', opts)
