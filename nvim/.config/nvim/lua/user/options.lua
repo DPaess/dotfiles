@@ -39,6 +39,9 @@ set.swapfile = false
 -- keep cursor 'centered'
 set.scrolloff = 8
 
+-- project config: run a trusted .nvim.lua (asked once per content, :trust)
+set.exrc = true
+
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
 vim.g.netrw_altv = 1
