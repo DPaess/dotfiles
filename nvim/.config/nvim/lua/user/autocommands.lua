@@ -6,8 +6,6 @@ local relative_number = augroup('relative_number', {})
 local cursor_line = augroup('cursor_line', {})
 local pavani = augroup('pavani', {})
 
-local sudo_write = require("user.sudo")
-
 
 -- highlight yanked text
 autocmd('TextYankPost', {
@@ -28,38 +26,28 @@ autocmd('VimResized', {
     command = 'execute "normal! \\<c-w>="',
 })
 
--- trim whitespaces and write sudo files
-autocmd({ "BufWriteCmd", }, {
+-- before every save: format Go and Lua, trim trailing whitespace (Markdown keeps its two-space line breaks).
+-- A pre-write hook, not a write replacement, so LSP save notifications and other plugins' hooks still fire.
+-- Root-owned files: :W (commands.lua) falls back to sudo.
+autocmd("BufWritePre", {
     group = pavani,
     pattern = "*",
-    callback = function()
-        -- skip autocmd for oil buffers
-        local exclude_ft = { "oil" }
-        local current_ft = vim.bo.filetype
-        for _, ft in ipairs(exclude_ft) do
-            if current_ft == ft then
-                pcall(vim.cmd, 'w')
-                return
-            end
-        end
-
-        local format_fts = { "go", "lua" }
-        for _, ft in ipairs(format_fts) do
-            if current_ft == ft then
-                vim.lsp.buf.format()
-            end
-        end
-
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        local command = "%s/\\s\\+$//e"
-        vim.cmd(command)
-        vim.api.nvim_win_set_cursor(0, cursor)
-        local ok, result = pcall(vim.cmd, 'w')
-        if (ok) then
+    callback = function(args)
+        local ft = vim.bo[args.buf].filetype
+        if ft == "oil" then
             return
         end
-        sudo_write()
-        vim.cmd("e! %")
+
+        if (ft == "go" or ft == "lua")
+            and #vim.lsp.get_clients({ bufnr = args.buf, method = "textDocument/formatting" }) > 0 then
+            vim.lsp.buf.format({ bufnr = args.buf, async = false, timeout_ms = 3000 })
+        end
+
+        if ft ~= "markdown" then
+            local view = vim.fn.winsaveview()
+            vim.cmd([[keeppatterns %s/\s\+$//e]])
+            vim.fn.winrestview(view)
+        end
     end,
 })
 
@@ -104,11 +92,4 @@ autocmd({ "TermOpen" }, {
     end,
 })
 
--- run "go fmt" on golang files save
-autocmd("BufWritePre", {
-    pattern = "*.go",
-    callback = function()
-        vim.lsp.buf.format()
-    end,
-})
 

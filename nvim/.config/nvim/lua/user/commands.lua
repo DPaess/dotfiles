@@ -1,6 +1,17 @@
 local cmd = vim.api.nvim_create_user_command
 
-cmd('W', 'w', {})
+-- :W writes like :w, falling back to sudo (user.sudo) when the file or its directory is not writable
+cmd('W', function()
+    local file = vim.fn.expand('%:p')
+    local writable = vim.fn.filewritable(file) == 1
+        or (vim.fn.filereadable(file) == 0 and vim.fn.filewritable(vim.fn.fnamemodify(file, ':h')) == 2)
+    if writable then
+        vim.cmd('write')
+    else
+        require('user.sudo')()
+        vim.cmd('edit!')
+    end
+end, {})
 cmd('WQ', 'wq', {bang = true})
 cmd('Wq', 'wq', {bang = true})
 cmd('Q', 'q', {bang=true})
