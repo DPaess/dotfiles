@@ -40,14 +40,12 @@
 [pager]
 	difftool = true
 
-[merge]
-	tool = vimdiff3
+[diff]
 	algorithm = histogram
 
-[mergetool "vimdiff3"]
-	path = nvim
-	algorithm = histogram
-	conflictstyle = diff3
+[merge]
+	tool = nvimdiff
+	conflictStyle = zdiff3
 
 [mergetool]
 	keepBackup = false
@@ -79,3 +77,7 @@
 
 [help]
     autocorrect = prompt
+
+# machine-local settings, not tracked (e.g. includeIf blocks giving work repos their own email)
+[include]
+    path = ~/.gitconfig.local
