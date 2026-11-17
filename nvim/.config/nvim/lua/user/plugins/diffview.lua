@@ -2,7 +2,6 @@ return {
   'sindrets/diffview.nvim',
   config = function()
     require('diffview').setup {
-      use_icons = false,
       enhanced_diff_hl = true,
       keymaps = {
         view = { q = "<Cmd>DiffviewClose<CR>" },
