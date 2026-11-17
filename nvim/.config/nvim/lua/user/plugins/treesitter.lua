@@ -15,6 +15,7 @@ return {
             "lua", "vim", "vimdoc", "query", "python", "c", "cpp",
             "markdown", "markdown_inline", "go", "rust", "toml",
             "javascript", "typescript", "html", "css", "json",
+            "cmake", "yaml", "xml", "bash", "dockerfile",
         })
 
         -- Highlighting: the module system is gone; enable per-buffer.
