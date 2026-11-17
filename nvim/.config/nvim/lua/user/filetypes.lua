@@ -1,25 +1,16 @@
--- holds exotic filetypes that I encounter in the wild
--- maybe use filetype.nvim? idk
-
--- ROS xml files
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = {"*.launch", "*.world", "*.sdf"},
-    command = "set filetype=xml"
+-- filetypes Neovim does not detect on its own
+vim.filetype.add({
+    extension = {
+        -- ROS: launch files, Gazebo worlds and models, robot descriptions
+        launch = "xml",
+        world = "xml",
+        sdf = "xml",
+        urdf = "xml",
+        xacro = "xml",
+        -- go html/template
+        tmpl = "html",
+    },
+    filename = {
+        [".localrc"] = "sh",
+    },
 })
-
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = {".localrc"},
-    command = "set filetype=sh"
-})
-
--- go html/template
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = {"*.tmpl"},
-    command = "set filetype=html"
-})
-
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = {"*.templ"},
-    command = "set filetype=templ"
-})
-
