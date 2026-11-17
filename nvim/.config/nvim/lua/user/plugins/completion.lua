@@ -22,6 +22,14 @@ return {
             documentation = { auto_show = true },
         },
 
+        -- lazydev completes require() paths and plugin modules in Lua files
+        sources = {
+            default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+            providers = {
+                lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
+            },
+        },
+
         cmdline = {
             completion = {
                 menu = { auto_show = true },

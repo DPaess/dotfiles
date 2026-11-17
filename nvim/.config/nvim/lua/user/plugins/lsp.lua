@@ -1,6 +1,6 @@
 return {
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         config = function()
             require("mason").setup()
 
@@ -14,16 +14,20 @@ return {
         end,
     },
 
+    -- lua_ls for the Neovim config: loads only the modules you require, instead of every plugin at startup
     {
-        "williamboman/mason-lspconfig.nvim",
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {},
+    },
+
+    {
+        "mason-org/mason-lspconfig.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
-            "saghen/blink.cmp",
         },
 
         config = function()
-            local capabilities = require("blink.cmp").get_lsp_capabilities()
-
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "lua_ls",
@@ -42,45 +46,23 @@ return {
                 },
             })
 
-            -- LUA
+            -- Only servers with settings of their own are configured here; blink.cmp adds its
+            -- completion capabilities to every server itself (Neovim 0.11+).
+
             vim.lsp.config("lua_ls", {
-                capabilities = capabilities,
                 settings = {
                     Lua = {
-                        runtime = {
-                            version = "LuaJIT",
-                        },
-                        diagnostics = {
-                            globals = { "vim" },
-                        },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file("", true),
-                            checkThirdParty = false,
-                        },
-                        telemetry = {
-                            enable = false,
-                        },
+                        runtime = { version = "LuaJIT" },
+                        telemetry = { enable = false },
                     },
                 },
             })
 
-            -- C/C++
             vim.lsp.config("clangd", {
-                capabilities = capabilities,
-                cmd = {
-                    "clangd",
-                    "--background-index",
-                },
+                cmd = { "clangd", "--background-index" },
             })
 
-            -- Python
-            vim.lsp.config("pyright", {
-                capabilities = capabilities,
-            })
-
-            -- Go
             vim.lsp.config("gopls", {
-                capabilities = capabilities,
                 settings = {
                     gopls = {
                         gofumpt = true,
@@ -88,23 +70,6 @@ return {
                     },
                 },
             })
-
-            -- JS/TS
-            vim.lsp.config("ts_ls", {
-                capabilities = capabilities,
-            })
-
-            -- HTML
-            vim.lsp.config("html", {
-                capabilities = capabilities,
-            })
-
-            -- CSS
-            vim.lsp.config("cssls", {
-                capabilities = capabilities,
-            })
-
-            -- Servers are enabled by mason-lspconfig's automatic_enable (above).
 
             vim.diagnostic.config({
                 virtual_text = true,
