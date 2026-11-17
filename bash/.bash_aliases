@@ -25,15 +25,17 @@ alias open="xdg-open"
 # A really simple password generator
 alias pw='bash -c '"'"'echo `tr -dc $([ $# -gt 1 ] && echo $2 || echo "A-Za-z0-9") < /dev/urandom | head -c $([ $# -gt 0 ] && echo $1 || echo 30)`'"'"' --'
 
-# tmux alias to work with colors
-alias tmux='tmux -2'
-
 # cat with syntax highlight
-[ "$(command -v bat)" ] && alias cat="bat --style=plain"
+# Ubuntu ships bat as batcat
+if command -v bat >/dev/null 2>&1; then
+    alias cat="bat --style=plain"
+elif command -v batcat >/dev/null 2>&1; then
+    alias cat="batcat --style=plain"
+fi
 
 # Use neovim as vim
-if [[ -f "$HOME/.local/bin/nvim" ]]; then
-    alias vim="$HOME/.local/bin/nvim"
+if command -v nvim >/dev/null 2>&1; then
+    alias vim="nvim"
 fi
 
 # ripgrep como substituto moderno do grep (mantém cores automáticas)
@@ -41,9 +43,9 @@ if command -v rg >/dev/null 2>&1; then
     alias grep='rg --color=auto'
 fi
 
-# fd como substituto moderno do find
-if command -v fd >/dev/null 2>&1; then
-    alias find='fd'
+# fd: Ubuntu ships it as fdfind; find keeps its own syntax
+if ! command -v fd >/dev/null 2>&1 && command -v fdfind >/dev/null 2>&1; then
+    alias fd='fdfind'
 fi
 
 alias upgrade='sudo apt update && sudo apt upgrade'
