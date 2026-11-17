@@ -2,7 +2,6 @@ return {
     "olimorris/codecompanion.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "j-hui/fidget.nvim",
     },
     init = function()
         vim.keymap.set({ "n", "v" }, "<LocalLeader>ca", "<cmd>CodeCompanionActions<cr>",
@@ -13,7 +12,7 @@ return {
     end,
 
     opts = {
-        strategies = {
+        interactions = {
             chat = {
                 adapter = "opencode",
             },
@@ -23,13 +22,6 @@ return {
         },
 
         display = {
-            diff = {
-                provider = "mini_diff",
-                word_highlights = {
-                    additions = true,
-                    deletions = true,
-                },
-            },
             chat = {
                 fold_context = true,
                 start_in_insert_mode = true,
