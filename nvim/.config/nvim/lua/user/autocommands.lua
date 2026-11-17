@@ -34,9 +34,6 @@ autocmd("BufWritePre", {
     pattern = "*",
     callback = function(args)
         local ft = vim.bo[args.buf].filetype
-        if ft == "oil" then
-            return
-        end
 
         if (ft == "go" or ft == "lua")
             and #vim.lsp.get_clients({ bufnr = args.buf, method = "textDocument/formatting" }) > 0 then
