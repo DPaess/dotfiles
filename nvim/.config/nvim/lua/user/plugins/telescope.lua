@@ -1,12 +1,17 @@
 return {
     'nvim-telescope/telescope.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        -- native sorter: faster on large trees, and fzf syntax ('exact, !exclude, ^prefix, suffix$)
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
     config = function()
         require('telescope').setup {
             defaults = {
                 path_display = { "truncate" }
             }
         }
+        require('telescope').load_extension('fzf')
 
         local keymap = vim.keymap.set
         local opts = { silent = true }
