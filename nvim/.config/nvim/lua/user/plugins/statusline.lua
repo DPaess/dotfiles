@@ -9,6 +9,10 @@ return {
                 component_separators = '',
                 section_separators   = { left = '', right = '' },
             },
+            -- buffer bar: every open file
+            tabline = {
+                lualine_a = { { 'buffers', mode = 0 } },
+            },
             sections = {
                 lualine_c = {
                     {

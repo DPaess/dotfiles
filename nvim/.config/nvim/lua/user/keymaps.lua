@@ -39,6 +39,10 @@ keymap("i", "'", "'<c-g>u", opts)
 keymap("n", "<leader>gd", vim.lsp.buf.definition, opts)
 keymap("n", "<leader>lf", vim.lsp.buf.format, opts)
 
+-- open files (the buffer bar): next / previous
+keymap("n", "<leader>j", "<cmd>bnext<cr>", opts)
+keymap("n", "<leader>k", "<cmd>bprevious<cr>", opts)
+
 -- copy
 keymap("n", "<leader>y", '"+y', opts)
 keymap("v", "<leader>y", '"+y', opts)
